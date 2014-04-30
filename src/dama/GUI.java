@@ -495,8 +495,10 @@ public class GUI extends JFrame {
                         cvb=new ImageIcon("cvb"+c+".jpg");
                         dn=new ImageIcon("dn"+c+".jpg");
                         dsn=new ImageIcon("dsn"+c+".jpg");
-                        dn=new ImageIcon("dn"+c+".jpg");
+                        db=new ImageIcon("db"+c+".jpg");
+                        dsb=new ImageIcon("dsb"+c+".jpg");
                         cvs=new ImageIcon("cvs"+c+".jpg");
+                        
                         int n;
                         if(!c.equals(""))
                             n=Integer.parseInt(c);

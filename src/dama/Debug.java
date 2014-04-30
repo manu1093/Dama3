@@ -16,9 +16,7 @@ import javax.swing.JFrame;
  */
 public class Debug {
 
-    /**
-     * @param args the command line arguments
-     */
+    
    public static void main(String[] args) {
 	
 		javax.swing.SwingUtilities.invokeLater(new Runnable(){

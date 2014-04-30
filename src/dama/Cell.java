@@ -72,7 +72,7 @@ public class Cell implements Serializable{//implementa un modo per mettere il ma
     }
     
     public ArrayList<Cell> celleAdiacentiAlte(){
-            ArrayList <Cell> a=new ArrayList <Cell>();
+            ArrayList <Cell> a=new ArrayList <>();
             try{
             a.add(new Cell (x-1, y-1));
             }catch(CellaInesistenteException e){}
@@ -83,7 +83,7 @@ public class Cell implements Serializable{//implementa un modo per mettere il ma
             return a;
         }      
        public ArrayList<Cell> celleAdiacentiBasse(){
-            ArrayList <Cell> a=new ArrayList <Cell>();
+            ArrayList <Cell> a=new ArrayList <>();
             try{
             a.add(new Cell(x+1, y+1));
             }catch(CellaInesistenteException e){}
@@ -93,7 +93,7 @@ public class Cell implements Serializable{//implementa un modo per mettere il ma
             return a;
         }
        public ArrayList<Cell> celleVicineBasse(){
-            ArrayList <Cell> a=new ArrayList <Cell>();
+            ArrayList <Cell> a=new ArrayList <>();
             try{
             a.add(new Cell(x+2, y+2));
             }catch(CellaInesistenteException e){}
@@ -103,7 +103,7 @@ public class Cell implements Serializable{//implementa un modo per mettere il ma
             return a;
         }
         public ArrayList<Cell> celleVicineAlte(){
-            ArrayList <Cell> a=new ArrayList <Cell>();
+            ArrayList <Cell> a=new ArrayList <>();
             try{
             a.add(new Cell(x-2, y-2));
             }catch(CellaInesistenteException e){}
@@ -113,7 +113,7 @@ public class Cell implements Serializable{//implementa un modo per mettere il ma
             return a;
         }
         public ArrayList<Cell> celleVicine(){
-            ArrayList <Cell> a=new ArrayList <Cell>();
+            ArrayList <Cell> a=new ArrayList <>();
             try{
                 Cell c=new Cell(x+2, y+2);
                 a.add(c);
@@ -138,7 +138,7 @@ public class Cell implements Serializable{//implementa un modo per mettere il ma
             return a;
         }
         public ArrayList<Cell> celleAdiacenti(){
-            ArrayList <Cell> a=new ArrayList <Cell>();
+            ArrayList <Cell> a=new ArrayList <>();
             try{
             a.add(new Cell(this.getX()+1, this.getY()+1));
             }catch(CellaInesistenteException e){}

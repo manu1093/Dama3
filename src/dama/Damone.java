@@ -21,6 +21,7 @@ public class Damone extends Pedina implements Serializable{
         public Damone(Pedina p){
             super(p.color);
         }
+        @Override
         public char getColor(){
 		return (""+super.color).toUpperCase().charAt(0);
 	}

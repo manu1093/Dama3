@@ -15,15 +15,12 @@ import java.util.logging.Logger;
  */
 
 public final class Arbitro {
-	//private int moveSource []=new int [2];
-	//private int moveDestination []= new int[2];
+	
 	private Cell moveSource;
-	private Cell moveDestination;
-	public static final int turnoBianco=0;
-        public static final int turnoNero=1;
-	private int turn;
-        private boolean pedinaMangiaDamone=true; 
-	public Arbitro(int turn){//da mettere l'eccezione in caso
+	private Cell moveDestination;	
+	private final int turn;
+        private boolean pedinaMangiaDamone=false; 
+	public Arbitro(int turn){
 		this.resettaMossa();
                 this.turn=turn;
 	}
@@ -42,22 +39,7 @@ public final class Arbitro {
 		
 		
 	}
-        /*
-        public Cell getSource(Tavola t) throws CellaInesistenteException{
-            for(Cell c:t){
-                if(c.getX()==this.moveSource.getX()&&c.getY()==this.moveSource.getY())
-                       return t.getCell(moveDestination.getX(),moveDestination.getY());
-            }
-            return null;
-        }
-        public Cell getDestination(Tavola t) throws CellaInesistenteException{
-             for(Cell c:t){
-                if(c.getX()==this.moveDestination.getX()&&c.getY()==this.moveDestination.getY())
-                       return t.getCell(moveDestination.getX(),moveDestination.getY());
-            }
-            return null;
-        }
-        */
+        
 	public void resettaMossa(){
 		
 			this.moveSource=null;
@@ -87,12 +69,7 @@ public final class Arbitro {
 			return b;
 		
 	}
-	/*
-	public void setSource(int i,int j){//deprecato
-		this.moveSource.getX()=i;
-		this.moveSource.getY()=j;
-	}
-	*/
+	
 	public void setSource(Cell c){
 		this.moveSource=c;
 		
@@ -100,12 +77,7 @@ public final class Arbitro {
 	public void setDestination(Cell c){
 		this.moveDestination=c;
 	}
-	/*
-	public void setDestination(int i,int j){//deprecato
-		this.moveDestination.getX()=i;
-		this.moveDestination.getY()=j;
-	}
-	*/
+	
 	public Cell getSource(){
 		return moveSource;
 	}
@@ -141,13 +113,13 @@ public final class Arbitro {
 	public boolean control(Tavola t){//true se si puÃ² muovere sulla destinazione scelta
 		boolean b=true;
                  
-		if(this.moveSource==this.moveDestination)//this.moveDestination.getX()==this.moveSource.getX()&&this.moveDestination.getY()==this.moveSource.getY() aumentato a tutti
-			b=false;//si puï¿½ togliere quuesta condizione...
+		if(this.moveSource==this.moveDestination)
+			b=false;
 		if(!t.isEmpty(moveDestination))
 			b=false;
 		
 		//mossa consentita solo in alto a destra o a sinistra
-			//if((this.moveSource.getX()!=this.moveDestination.getX()+1&&this.moveSource.getX()+1!=this.moveDestination.getX())||(this.moveSource.getY()!=this.moveDestination.getY()+1)){
+			
 		boolean f=true;
                 try{
                 if(this.turnoBianco()&&t.containsPezzoBianco(this.moveSource)&&!t.containsDamone(moveSource)){
@@ -212,7 +184,7 @@ public final class Arbitro {
                 }
 	
 public Cell mangiata(Tavola t) {//true se la mossa Ã¨ una mangiata e si puÃ² fare
-		//USA IL METODO MIDDLECELL CHE è DA SISTEMARE
+		
 		//posso provare a mangiare
     
     Cell b=null; 
@@ -260,53 +232,7 @@ public Cell mangiata(Tavola t) {//true se la mossa Ã¨ una mangiata e si puÃ²
 
 		
 	}
-public Cell mangiante(Tavola t){//true se la mossa Ã¨ una mangiata e si puÃ² fare
-	 try {
-                if(t.containsDamone(this.moveSource.middleCell(this.moveDestination))&&!this.pedinaMangiaDamone)
-                    if(!t.containsDamone(this.moveSource))
-                        return null;
-            } catch (CellaVuotaException ex) { }
-        Cell b=null; 
-    try{    
-        if(t.isEmpty(moveDestination)){
-            if(this.turnoBianco()&&t.containsPezzoBianco(this.moveSource)&&!t.containsDamone(moveSource)){
-                
-                    for(Cell c:this.moveSource.celleVicineAlte()){
-                        if(this.moveDestination.equals(c)&&!isMyPedina(t.getPedina(moveSource.middleCell(moveDestination))))
-                            return moveSource;
-                    }
-                }
-            }
-       
-    }catch(  CellaVuotaException|  NullPointerException | IllegalArgumentException e){b=null;}
-   
-    try{
-        if(this.turnoNero()&&t.containsPedinaNera(this.moveSource)){
 
-            if((t.isEmpty(this.moveDestination))){
-                for(Cell c:this.moveSource.celleVicineBasse()){
-                    if(this.moveDestination.equals(c)&&!isMyPedina(t.getPedina(moveSource.middleCell(moveDestination))))
-                        return moveSource;
-                }
-            }
-        }
-    }catch(   CellaVuotaException|   NullPointerException | IllegalArgumentException e){b=null;}
-    
-    try{
-	if(t.containsDamone(this.moveSource))
-            if(t.isEmpty(this.moveDestination))
-                for(Cell c:this.moveSource.celleVicine())            
-                    if(this.moveDestination.equals(c)&&!isMyPedina(t.getPedina(moveSource.middleCell(moveDestination))))
-                        return moveSource;
-    }catch(  CellaVuotaException|   NullPointerException | IllegalArgumentException e){b=null;} 
-        return b;
-		
-
-
-
-
-}
-		
 		
 	
 	public boolean controlMangiata(Tavola t){		
@@ -345,7 +271,7 @@ public Cell mangiante(Tavola t){//true se la mossa Ã¨ una mangiata e si puÃ²
         public void setPedinaMangiaDamone(boolean v){
             this.pedinaMangiaDamone=v;
         }
-        public boolean getPedinaMangiaDamone(boolean v){
+        public boolean getPedinaMangiaDamone(){
            return this.pedinaMangiaDamone;
         }
 }

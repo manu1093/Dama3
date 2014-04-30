@@ -48,17 +48,11 @@ public class Engine {
 	
 	public int receivedinput(Tavola t,Cell ce) {//0 mezza mossa 1 mossa intera //stampa tavolata
 		
-		//boolean f=true;
+		
 		
                 if(!(ar.inseritaSource())){
-                        //gestione stallo(se esiste il metodo c'è)
-                        if(this.turnoBianco())
-                            this.ar=new Arbitro(Arbitro.turnoBianco);
-                        if(this.turnoNero())
-                            this.ar=new Arbitro(Arbitro.turnoNero);
-                        //moveSource[0]==-1
-                        //moveSource[0]=i;
-                        //moveSource[1]=j;                        
+                        //gestione stallo(se esiste il metodo c'è)                        
+                                         
                         ar.setSource(ce);
                         //f=false;
                         if(!ar.controlSource(t)){
@@ -70,14 +64,7 @@ public class Engine {
                 }
                 if(mangiato){//sono in una fase della magiata
                     ar.setDestination(ce);
-                    /*
-                    for(Arbitro c:pm)
-                        if(!c.getDestination().equals(ar.getDestination())){//deve essere una mangiata 
-                                JOptionPane.showMessageDialog(null,"obbligatorio proseguire con la mangiata");
-                                ar.resettaDestinazione();
-                                r=0;
-                                }
-                    */
+                    
                     boolean b=false;
                     for(Arbitro c:pm)//pedine con mangiata massima
                                 if(c!=null)
@@ -87,40 +74,25 @@ public class Engine {
                                      }
                             if(pm.get(0)!=null&&!b){
                                 JOptionPane.showMessageDialog(null,"obbligatorio proseguire con la mangiata");									
-                                //t.setPedina(' ', this.mangiabili(t));//x soffiata
+                                
                                 ar.resettaMossa();
                                 return 0;
                             }
                     
                 }
                 if(ar.inseritaSource()&&!ar.inseritaDestinazione()){
-                        //if(ar.controlVictory(t))
-                        //JOptionPane.showMessageDialog(null,ar.getTurnoToString()+" ha vinto");
-                        //moveSource[0]!=-1
-                        //t.setText(t.getText(moveSource[0], moveSource[1]), i, j);
-                        //t.setText(' ',moveSource[0], moveSource[1]);
-                        //resettaMossa();
-                        //aggiorna();
-                        //moveDestination[0]=i;
-                        //moveDestination[1]=j;
+                        
                     
-                        if(ar.getSource().getX()==1&&ar.getSource().getY()==5)
-                                 System.out.print("");//per debug
-                        //boolean c=false;
-                        //if(this.mangiabili(t)!=null)//NON CANCELLARE
-                                //c=true;	//NON CANCELLARE
-                        ar.setDestination(ce);
-                        //controllo che non sia una fase della magniata
-                          Arbitro temp=new Arbitro(ar);
-                          temp.setDestination(ar.getSource());
-                          Node root=new Node(temp,0);//deve essere 0;            
-                          this.creaAlberoMangiatePossibili(t, root);
+                       
+                        ar.setDestination(ce);                       
+                          
+                         
                           
                             if(!ar.control(t)){
                                 JOptionPane.showMessageDialog(null,"mossa non valida1");
                                 ar.resettaMossa();
                                 return 2;
-                            }//mangiabilip se non ci sono da array con un elemento null
+                            }
                             boolean b=false;
                     
                         if(t.getNPedine()==6)
@@ -134,7 +106,7 @@ public class Engine {
                                      }
                             if(this.mangiabiliP(t).get(0)!=null&&!b){
                                 JOptionPane.showMessageDialog(null,"obbligatorio mangiare");									
-                                //t.setPedina(' ', this.mangiabili(t));//x soffiata
+                                
                                 ar.resettaMossa();
                                 return 2;
                             }
@@ -150,24 +122,18 @@ public class Engine {
                         if(ar.controlMangiata(t)){
                             r=gestisciMangiata(t,this.ar);
                         }else{						
-                                t.swapCelle(ar.getSource(), ar.getDestination());//t.setText(t.getText(moveSource[0], moveSource[1]), moveDestination[0], moveDestination[1]);
+                                t.swapCelle(ar.getSource(), ar.getDestination());
                                 if(avvenutaPromozione(ar,t))
                                         try {
                                             t.promuoviPedina(cellaPedinaPromossa(ar,t));
                                 } catch (CellaVuotaException ex) {
                                     System.out.println("non trovo pedina da promouvere"); 
                                 }
-                                //turno++
+                                
                                 ar.resettaMossa();
                                 r=1;
                         }
-    //                    if(ar.controlStallo(t)&&!ar.controlVictory(t))
-                      //      JOptionPane.showMessageDialog(null, "patta");
-                        
-                        
-                        
-                        //if(ar.controlVictory(t))
-                         //gestione vittoria  
+   
                        
                         return r;
                 }
@@ -175,10 +141,10 @@ public class Engine {
 
 
         }
-	public boolean avvenutaPromozione(Arbitro ar,Tavola t){//metti nell'arbitro
+	private boolean avvenutaPromozione(Arbitro ar,Tavola t){//metti nell'arbitro
 		return cellaPedinaPromossa(ar,t)!=null;
 	}
-	public Cell cellaPedinaPromossa(Arbitro ar,Tavola t){try {
+	private Cell cellaPedinaPromossa(Arbitro ar,Tavola t){try {
             //metti nell'arbitro
             if(t.getPedina(ar.getDestination()).isDamone())
                 return null;
@@ -195,12 +161,10 @@ public class Engine {
 		return null;
 	}
 	
-        public ArrayList<Arbitro> mangiabiliP(Tavola t) {//torna tutte le celle che possono mangiare
-		Arbitro arr=null;
-                if(this.turnoBianco())
-                    arr=new Arbitro(Arbitro.turnoBianco);
-                if(this.turnoNero())
-                    arr=new Arbitro(Arbitro.turnoNero);
+        private ArrayList<Arbitro> mangiabiliP(Tavola t) {//torna tutte le celle che possono mangiare
+		Arbitro arr=new Arbitro(this.turno);
+               
+                
                 ArrayList <Node> mp=new ArrayList<>();//mangiate possibili
 			for(Cell c:t){//guarda tutte le celle e trova le mangiate massime per ogni pedina
                             try{
@@ -211,7 +175,7 @@ public class Engine {
                                     Node root=new Node(temp,0);//deve essere 0;            
                                     this.creaAlberoMangiatePossibili(t, root);                                    
                                     if(!root.getChildren().isEmpty()){//può mangiare
-                                        ArrayList<Node>a=this.trovaMangiataMassimaPerUnaPedina(t, root);
+                                        ArrayList<Node>a=this.candidatiAllaMaggioreMangiata(t, root);
                                         a=this.nodiMiglioriPiuAlti(a);
                                         mp.addAll(a);
                                     }
@@ -229,7 +193,7 @@ public class Engine {
                             for(Node n:mp)
                                 p.addFiglio(n);
                             ArrayList<Arbitro> mm=new ArrayList<>();
-                             ArrayList<Node>a=this.trovaMangiataMassimaPerUnaPedina(t, p);
+                             ArrayList<Node>a=this.candidatiAllaMaggioreMangiata(t, p);
                             
                             for(Node n:this.nodiMiglioriPiuAlti(a)){
                                 GenericArbitroTree g=new GenericArbitroTree(n);
@@ -238,7 +202,7 @@ public class Engine {
 		return mm;
 					
 	}
-	public ArrayList<Node> trovaMangiataMassimaPerUnaPedina(Tavola t,Node root) {//torna un array di nodi con massima mangiata
+	private ArrayList<Node> candidatiAllaMaggioreMangiata(Tavola t,Node root) {//torna un array di nodi con massima mangiata
             ArrayList<Node> r=new ArrayList();            
             int v=0;
             int max=0;
@@ -272,7 +236,7 @@ public class Engine {
                 
                 for(Node n:root.getChildren())
                     if(n.getId()==max){
-                        ArrayList<Node>a=this.trovaMangiataMassimaPerUnaPedina(t,n);
+                        ArrayList<Node>a=this.candidatiAllaMaggioreMangiata(t,n);
                         r.addAll(a);
                     }
                 if(root.getChildren().isEmpty())
@@ -281,7 +245,7 @@ public class Engine {
             return r;
         }
         //torna il padre del nodo più basso da abbinare a l'altro
-        public ArrayList<Node> nodiMiglioriPiuAlti(ArrayList<Node> p){//era Qualcosa
+        private ArrayList<Node> nodiMiglioriPiuAlti(ArrayList<Node> p){//era Qualcosa
             ArrayList a=new ArrayList<>();
             int min=3000;
             for(Node n:p){
@@ -298,71 +262,7 @@ public class Engine {
             }
             return a;
         }
-        //era
-        /*
-        public ArrayList<Node> nodiMiglioriPiuBassi(ArrayList<Node> p){//era qualcosaF
-            ArrayList a=new ArrayList<>();
-            int min=3000;
-            for(Node n:p){
-                if(n.getNodeDepth()<min)
-                    min=n.getNodeDepth();
-            }
-            for(Node n:p){
-                if(min==n.getNodeDepth()){
-                    Node root=n;                    
-                    a.add(root);
-                }
-            }
-            return a;
-        }
-                  */  
-            
-            
-            /*
-            int k=0;
-           for(Node n:root.getChildren())//quanti candidati ci sono
-               if(n.getId()==max)
-                   k++;
-           if(k==0){
-               return r;
-           }
-           if(k==1){
-                r.add(new GenericArbitroTree(nMax).getArbitro().getDestination());
-                return r;
-           }
-          
-           
-            for(Node n:root.getChildren()){
-                    GenericArbitroTree g2=new GenericArbitroTree(n);
-                    try {
-                        if(t.getPedina(g2.getArbitro().mangiata(t)).isDamone()&&n.getId()==max){//da mettere a posto
-                            pu=true;
-                            //r.add(g2.getArbitro().getDestination());
-                            r.add(n);
-                        }
-                    } catch (CellaVuotaException ex) {System.out.println("problema in massima mangiata");}
-                }
-            if(!pu){
-                for(Node n:root.getChildren()){
-                    if(n.getId()==max)
-                        //r.add(new GenericArbitroTree(nMax).getArbitro().getDestination());
-                        r.add(nMax);
-                }        
-            }
-            */
-           
-        public Cell getSimulaMangiata(Tavola t,Cell s){//true se la mossa ÃƒÂ¨ una mangiata e si puÃƒÂ² fare
-		Arbitro temp=new Arbitro(ar);
-                temp.setSource(s);
-		//posso provare a mangiare
-		Cell b=null;
-                for(Cell c:s.celleVicine()){
-                    temp.setDestination(c);
-                    if(temp.controlMangiata(t))
-                        return temp.mangiante(t);
-                }
-		return b;
-	}
+        
 
 	private GenericArbitroTree creaAlberoMangiatePossibili(Tavola t,Node root) {//per ora torna una pedina qualsiasi ache può mangiare            
 		GenericArbitroTree g=new GenericArbitroTree(root);
@@ -426,9 +326,7 @@ public class Engine {
                 t.removePezzo(c);//togli le pedine		
            
             t.swapCelle(ar.getSource(), ar.getDestination());
-            //t.setText(t.getText(ar.getSource()), ar.getDestination());//t.setText(t.getText(moveSource[0], moveSource[1]), moveDestination[0], moveDestination[1]);
-            //t.setText(' ',ar.getSource());
-            //System.out.print("mangiaato");       
+            
             Arbitro temp=new Arbitro(ar);
             temp.setSource(ar.getDestination());
             Node root=new Node(temp,0);//deve essere 0;            
@@ -439,7 +337,7 @@ public class Engine {
                     pm.clear();
                     ar.setSource(ar.getDestination());
                     ar.resettaDestinazione();
-                    for(Node n:nodiMiglioriPiuAlti(this.trovaMangiataMassimaPerUnaPedina(t, root)))
+                    for(Node n:nodiMiglioriPiuAlti(this.candidatiAllaMaggioreMangiata(t, root)))
                         this.pm.add(new GenericArbitroTree(n).getArbitro());
                     
                     mangiato=true;
@@ -499,7 +397,7 @@ public class Engine {
             return m;
             
         }
-        public Node creaAlberoDelleTavole(Node root,int depth){
+        private Node creaAlberoDelleTavole(Node root,int depth){
             if(depth==0)//da mettere nelle chiamate per rendre il progeamma più veloce
                 return root;
             GenericTavolaTree g=new GenericTavolaTree(root);
@@ -512,7 +410,7 @@ public class Engine {
                                 if(a.getSource().equals(s)){
                                     ArrayList <Node> b= new ArrayList<>();//buttalo fuori prima
                                     b.add(new Node(a,0));                                
-                                    Node n=qualcosaltro(root,b,t);
+                                    Node n=gestioneMangiate(root,b,t);
                                     this.nextTurn();
                                     this.creaAlberoDelleTavole(n,depth-1);
                                     this.nextTurn();
@@ -549,7 +447,7 @@ public class Engine {
                 return (this.turnoBianco()&&p.isBianca())||(this.turnoNero()&&p.isNera());
             }else throw new IllegalArgumentException();
         }
-        private Node qualcosaltro(Node root,ArrayList<Node> mangiate,Tavola t){//crea un albero delle tavole in caso di mangiata
+        private Node gestioneMangiate(Node root,ArrayList<Node> mangiate,Tavola t){//crea un albero delle tavole in caso di mangiata
             for(Node h:mangiate){
                 Arbitro a=new GenericArbitroTree(h).getArbitro();
                 Tavola t2=new Tavola(t);
@@ -558,9 +456,9 @@ public class Engine {
                 Node n=new Node(a,0);
                 this.creaAlberoMangiatePossibili(t2,n);
                 if(!n.getChildren().isEmpty()){//si può procedere conm la mangiata
-                    ArrayList <Node> b= this.trovaMangiataMassimaPerUnaPedina(t2,n);
+                    ArrayList <Node> b= this.candidatiAllaMaggioreMangiata(t2,n);
                     ArrayList <Node> c= this.nodiMiglioriPiuAlti(b);
-                    return qualcosaltro(root,c,t2);
+                    return gestioneMangiate(root,c,t2);
                 }else{//mangiata finita
                     if(this.avvenutaPromozione(a,t2))
                         try {
@@ -576,7 +474,7 @@ public class Engine {
             
         }
         
-        public int punteggioTavola(Tavola t){//il turno deve essere giusto
+        private int punteggioTavola(Tavola t){//il turno deve essere giusto
             int r=0;
             for(Cell c:t){
                 try {
@@ -618,11 +516,16 @@ public class Engine {
                             else
                                 r-=3;
                         }else{
-                            if(t.getPedina(c).isDamone())//conta se mangia pedine
-                                r+=120;
-                            else
-                                r+=40;
-                                
+                            if(ar.getPedinaMangiaDamone()){
+                                if(t.getPedina(c).isDamone())//conta se mangia pedine
+                                    r+=120;
+                                else
+                                    r+=41;
+                            }else
+                                if(t.getPedina(c).isDamone())//conta se mangia pedine
+                                    r+=121;
+                                else
+                                    r+=40;
                             
                         }
                             
@@ -642,7 +545,7 @@ public class Engine {
                
             return true;
         }
-        public Tavola calcolaMossa(Node root){
+        private Tavola calcolaMossa(Node root){
             Node s=root.getChildren().get(0);
             //int mp=root1.foglieN().size();
             int mp=root.getChildren().size();
@@ -726,7 +629,7 @@ public class Engine {
                 }   
             return r;
         }
-        public boolean controlPattaKV(Tavola t){//t è la mossa che va controllata     
+        private boolean controlPattaKV(Tavola t){//t è la mossa che va controllata     
             if(this.nTavoleUguali==0)
                 return false;
             if(controlVictory(t)){
