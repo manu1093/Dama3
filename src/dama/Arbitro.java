@@ -19,7 +19,7 @@ public final class Arbitro {
 	private Cell moveSource;
 	private Cell moveDestination;	
 	private final int turn;
-        private boolean pedinaMangiaDamone=false; 
+        private boolean pedinaMangiaDamone=true; 
 	public Arbitro(int turn){
 		this.resettaMossa();
                 this.turn=turn;
