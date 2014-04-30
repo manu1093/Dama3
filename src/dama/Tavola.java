@@ -7,10 +7,15 @@
 package dama;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -20,7 +25,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class Tavola implements Iterable<Cell>{//itera su celle piene + comodo
+public class Tavola implements Iterable<Cell>,Serializable{//itera su celle piene + comodo
 	
 	private HashMap <Cell,Pedina> pedine;//stacca pedine da celle
         
@@ -267,9 +272,23 @@ public class Tavola implements Iterable<Cell>{//itera su celle piene + comodo
     public Iterator<Cell> iterator() {
         return this.pedine.keySet().iterator();
     }
-    public void load(File f){
+    public void load(File f) {
         this.pedine.clear();
-            try {
+        try{
+            FileInputStream fi=new FileInputStream(f);
+            ObjectInputStream oi=new ObjectInputStream(fi);
+            oi.readBoolean();            
+            Object p=oi.readObject();
+            if(p instanceof HashMap ){
+                this.pedine=(HashMap) p;
+            }
+            oi.close();
+        }catch (FileNotFoundException ex) {} catch (IOException ex) {
+                Logger.getLogger(Tavola.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Tavola.class.getName()).log(Level.SEVERE, null, ex);
+            }
+         /*   try {
                 Scanner s=new Scanner(new FileReader(f));
                 s.nextLine();
                 while(s.hasNext()){
@@ -294,40 +313,54 @@ public class Tavola implements Iterable<Cell>{//itera su celle piene + comodo
                 }
             } catch (    FileNotFoundException | CellaInesistenteException | CellaNonVuotaException | CellaVuotaException ex) {
                 System.out.println("problema caricamento tavola");
-            }
+            }*/
     }
     public void save(File f) {
-        
-        PrintWriter pw=null;
-        if(!f.exists())
             try {
+                FileInputStream fi=new FileInputStream(f);
+                ObjectInputStream oi=new ObjectInputStream(fi);
+                boolean Us=oi.readBoolean();
+                oi.close();
+                FileOutputStream fo=new FileOutputStream(f); 
+                ObjectOutputStream oo=new ObjectOutputStream(fo);
+                oo.writeBoolean(Us);
+                oo.writeObject(this.pedine);
+                oo.close();
+                } catch (FileNotFoundException ex) {} catch (IOException ex) {
+                Logger.getLogger(Tavola.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                /*
+                PrintWriter pw=null;
+                if(!f.exists())
+                try {
                 if(!f.createNewFile())
-                    System.out.println("il file non può essere creato");
-        } catch (IOException ex) {
-            
-        }
+                System.out.println("il file non può essere creato");
+                } catch (IOException ex) {
                 
-         String r1="";
-         try {
+                }
+                
+                String r1="";
+                try {
                 Scanner s=new Scanner(f);
                 r1=s.nextLine();
                 s.close();
                 pw = new PrintWriter(f);
                 pw.println(r1);
-            }catch(FileNotFoundException e){
+                }catch(FileNotFoundException e){
                 System.out.println("boh");
-            }
-            try {
-                for(Cell c:this){
-                    if(this.getPedina(c).isDamone())
-                        pw.println(c.getX()+":"+c.getY()+(":"+this.getPedina(c).getColor()).toUpperCase());
-                    else
-                        pw.println(c.getX()+":"+c.getY()+(":"+this.getPedina(c).getColor()));
                 }
-                 pw.close();
-            } catch (  CellaVuotaException ex) {
+                try {
+                for(Cell c:this){
+                if(this.getPedina(c).isDamone())
+                pw.println(c.getX()+":"+c.getY()+(":"+this.getPedina(c).getColor()).toUpperCase());
+                else
+                pw.println(c.getX()+":"+c.getY()+(":"+this.getPedina(c).getColor()));
+                }
+                pw.close();
+                } catch (  CellaVuotaException ex) {
                 System.out.println("problema salvataggio tavola");
-            }
+                }*/
+            
            
     }
     public int getNPedine(){

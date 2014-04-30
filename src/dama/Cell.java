@@ -6,10 +6,11 @@
 
 package dama;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class Cell {//implementa un modo per mettere il massimo variabile il massimo
+public class Cell implements Serializable{//implementa un modo per mettere il massimo variabile il massimo
                     //basta estendere una classe che implementa qif(y*8+x>63)  throw new CellaInesistenteException();
                
 	private final int x;                                        
@@ -171,4 +172,5 @@ public class Cell {//implementa un modo per mettere il massimo variabile il mass
             return new Cell(mx, my);
             }catch(CellaInesistenteException e){ return null;}
         }
+        
 }

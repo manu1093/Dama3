@@ -11,7 +11,15 @@ import javax.swing.JOptionPane;
 import albero.GenericArbitroTree;
 import albero.GenericTavolaTree;
 import albero.Node;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -771,6 +779,43 @@ public class Engine {
         }
         public void valoreDamone(int v){
             this.damonePedina=v;
+        }
+        public void saveH(File f) {
+           try {
+                FileInputStream fi=new FileInputStream(f);
+                ObjectInputStream oi=new ObjectInputStream(fi);
+                boolean Us=oi.readBoolean();
+                Object pedine=oi.readObject();
+                oi.close();
+                FileOutputStream fo=new FileOutputStream(f); 
+                ObjectOutputStream oo=new ObjectOutputStream(fo);
+                oo.writeBoolean(Us);
+                oo.writeObject(pedine);
+                oo.writeObject(Engine.history);
+                oo.close();
+                } catch (FileNotFoundException ex) {} catch (IOException ex) {
+                Logger.getLogger(Tavola.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Engine.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+        }
+        public void loadH(File f){
+            Engine.history.clear();
+            try{
+            FileInputStream fi=new FileInputStream(f);
+            ObjectInputStream oi=new ObjectInputStream(fi);
+            oi.readBoolean();
+            oi.readObject();
+            Object p=oi.readObject();
+            if(p instanceof Stack )
+                Engine.history=(Stack) p;
+             oi.close();
+                 
+        }catch (FileNotFoundException ex) {} catch (IOException ex) {
+                Logger.getLogger(Tavola.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Tavola.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 	}	
 				

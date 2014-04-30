@@ -6,8 +6,10 @@
 
 package dama;
 
+import java.io.Serializable;
 
-public class Pedina {
+
+public class Pedina implements Serializable{
 	public static final char bianco='b';
 	public static final char nero='n';
 	protected final char color;

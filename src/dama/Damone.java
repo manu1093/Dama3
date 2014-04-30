@@ -6,8 +6,10 @@
 
 package dama;
 
+import java.io.Serializable;
 
-public class Damone extends Pedina{
+
+public class Damone extends Pedina implements Serializable{
 
 	public Damone(char color) {
 		super(color);

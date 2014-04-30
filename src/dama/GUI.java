@@ -19,8 +19,13 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -164,6 +169,7 @@ public class GUI extends JFrame {
                             if(r==0){
                                     load(new File(System.getProperty("user.dir")+"/sss/ultimaPartita.txt"));
                                     t.load(new File(System.getProperty("user.dir")+"/sss/ultimaPartita.txt"));
+                                    pc.loadH(new File(System.getProperty("user.dir")+"/sss/ultimaPartita.txt"));
                              }    
                                 aggiorna(t);
 
@@ -174,13 +180,11 @@ public class GUI extends JFrame {
                     }
 
                     @Override
-                    public void windowClosing(WindowEvent e) {
-                        boolean b=false;
-                        boolean n=false;
-                        
+                    public void windowClosing(WindowEvent e) {                       
                         if(!partitaFinita){
                             save(new File(System.getProperty("user.dir")+"/sss/ultimaPartita.txt"));
                             t.save(new File(System.getProperty("user.dir")+"/sss/ultimaPartita.txt"));
+                            pc.saveH(new File(System.getProperty("user.dir")+"/sss/ultimaPartita.txt"));
                         }
                         else
                             new File(System.getProperty("user.dir")+"/sss/ultimaPartita.txt").delete();
@@ -258,18 +262,38 @@ public class GUI extends JFrame {
             
 			
             }
-            private void save(File f){
-                
+            public void save(File f) {
+                try {
+                    FileOutputStream fo=new FileOutputStream(f);
+                    ObjectOutputStream oo=new ObjectOutputStream(fo); 
+                    oo.writeBoolean(userIsBlack);
+                    oo.close();
+                } catch (FileNotFoundException ex) {} catch (IOException ex) { }
+                /*
                     try (PrintWriter pw = new PrintWriter(f)) {
                         if(this.userIsBlack){
                             pw.println("N");
                         }else
                             pw.println("B");
                     } catch (FileNotFoundException ex) {}
-                
+                */
             }    
-            private void load(File f) {
-            try {
+            public void load(File f) {
+                try{
+                    FileInputStream fi=new FileInputStream(f);
+                    ObjectInputStream oi=new ObjectInputStream(fi);
+                    this.userIsBlack=oi.readBoolean();
+                    oi.close();
+                    if(userIsBlack)
+                        this.scambiaPedine();
+                    
+                    } catch (FileNotFoundException ex) {        
+                Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+            }        
+                /*
+            try {                
                 Scanner s=new Scanner(f);
                 String r=s.nextLine();                
                 if(r.contains("N"))
@@ -278,6 +302,7 @@ public class GUI extends JFrame {
                 if(r.contains("B"))
                     utenteBianco();
             } catch (FileNotFoundException ex) {}
+                */
             
             
             }
@@ -717,6 +742,7 @@ public class GUI extends JFrame {
                 if(ret==JFileChooser.APPROVE_OPTION){
                         load(fc.getSelectedFile());
                         t.load(fc.getSelectedFile());
+                        pc.loadH(fc.getSelectedFile());
                 }
                             
                        
@@ -732,6 +758,7 @@ public class GUI extends JFrame {
                 if(ret==JFileChooser.APPROVE_OPTION){
                         save(fc.getSelectedFile());
                         t.save(fc.getSelectedFile());
+                        pc.saveH(fc.getSelectedFile());
                 }    
                    
                     
