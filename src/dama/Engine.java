@@ -186,21 +186,7 @@ public class Engine {
 		
 		return null;
 	}
-	public Cell mangiabili(Tavola t) {//
-		Arbitro arr=new Arbitro(ar);
-			for(Cell c:t){
-                            try{
-				if(arr.isMyPedina(t.getPedina(c))){//è del mio turno					
-					if(getSimulaMangiata(t,c)!=null)
-						return this.getSimulaMangiata(t,c);
-				}
-                            }catch(IllegalArgumentException e){} catch (CellaVuotaException ex) {
-                        Logger.getLogger(Engine.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                        }
-		return null;
-					
-	}
+	
         public ArrayList<Arbitro> mangiabiliP(Tavola t) {//torna tutte le celle che possono mangiare
 		Arbitro arr=null;
                 if(this.turnoBianco())
@@ -764,19 +750,16 @@ public class Engine {
             if(controlVictory(t)){
                 return false;
             }            
-            
-            this.nextTurn();
+            Engine other=new Engine(turno+1);            
             for(Cell c:t){
                 try {
                     Pedina p=t.getPedina(c);
-                    if(this.isMyPedina(p))
-                        if(!this.getPossiblyMoves(t, c).isEmpty()){
-                            this.nextTurn();
+                    if(other.isMyPedina(p))
+                        if(!other.getPossiblyMoves(t, c).isEmpty())                           
                             return false;
-                        }
+                        
                 } catch (CellaVuotaException ex) {}                
-            }
-            this.nextTurn();
+            }            
             return true;
         }
         public boolean controlPatta(Tavola t){//t è la mossa che va controllata     

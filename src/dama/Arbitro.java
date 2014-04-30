@@ -344,5 +344,8 @@ public Cell mangiante(Tavola t){//true se la mossa Ã¨ una mangiata e si puÃ²
         }
         public void setPedinaMangiaDamone(boolean v){
             this.pedinaMangiaDamone=v;
-        }        
+        }
+        public boolean getPedinaMangiaDamone(boolean v){
+           return this.pedinaMangiaDamone;
+        }
 }

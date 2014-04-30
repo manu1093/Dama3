@@ -314,8 +314,7 @@ public class GUI1 extends JFrame {
 							
 							
 							int r=user.receivedinput(t, c);
-                                                        if(user.controlPatta(t))
-                                                            JOptionPane.showMessageDialog(null,"umano ha fatto patta");
+                                                        
                                                         
                                                         if(r==2)
                                                             
@@ -333,6 +332,8 @@ public class GUI1 extends JFrame {
                                                
                                                                
                                                               if(r==1){  
+                                                                  if(user.controlPatta(t))
+                                                            JOptionPane.showMessageDialog(null,"umano ha fatto patta");
                                                                   aggiorna(t);
                                                                  if(!user.controlVictory(t)&&!user.controlPattaBlocco(t)){ 
                                                                     t=pc.mossaPc(t);
