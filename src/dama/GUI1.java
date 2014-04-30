@@ -13,7 +13,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.Stack;
@@ -395,7 +398,7 @@ public class GUI1 extends JFrame {
                 fc.setCurrentDirectory(new File(System.getProperty("user.dir")+"/salvataggi/"));
                 int ret=fc.showOpenDialog(load);
                 if(ret==JFileChooser.APPROVE_OPTION)
-                    
+                        
                         t.load(fc.getSelectedFile());
                        
                             
@@ -410,16 +413,16 @@ public class GUI1 extends JFrame {
                 fc.setCurrentDirectory(new File(System.getProperty("user.dir")+"/salvataggi/"));
                 int ret=fc.showOpenDialog(load);
                 if(ret==JFileChooser.APPROVE_OPTION){
-                        PrintWriter pw;
-                    try {
-                        pw = new PrintWriter(fc.getSelectedFile());
-                        pw.println("B");
-                        pw.close();
-                    } catch (FileNotFoundException ex) {
                         
-                    }
+                    try {
+                        ObjectOutputStream pw=new ObjectOutputStream(new FileOutputStream(fc.getSelectedFile()));
+                        pw.writeBoolean(false);                        
+                        pw.close();
+                    } catch (FileNotFoundException ex) {                        
+                    } catch (IOException ex) {}
                         
                         t.save(fc.getSelectedFile());
+                        pc.saveH(fc.getSelectedFile());
                 }
                 }
             if(arg0.getSource()==undo){

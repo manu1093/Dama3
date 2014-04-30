@@ -288,32 +288,7 @@ public class Tavola implements Iterable<Cell>,Serializable{//itera su celle pien
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Tavola.class.getName()).log(Level.SEVERE, null, ex);
             }
-         /*   try {
-                Scanner s=new Scanner(new FileReader(f));
-                s.nextLine();
-                while(s.hasNext()){
-                    String r=s.nextLine();
-                    int x=Integer.parseInt(r.split(":")[0]);
-                    int y=Integer.parseInt(r.split(":")[1]);
-                    Cell c=new Cell(x,y);
-                    char p=r.split(":")[2].charAt(0);
-                    if(p=='n')
-                        this.insertPedinaNera(c);
-                    if(p=='N'){
-                        this.insertPedinaNera(c);
-                        this.promuoviPedina(c);
-                    }
-                    if(p=='b')
-                        this.insertPedinaBianca(c);
-                    if(p=='B'){
-                        this.insertPedinaBianca(c);
-                        this.promuoviPedina(c);
-                    }
-                    
-                }
-            } catch (    FileNotFoundException | CellaInesistenteException | CellaNonVuotaException | CellaVuotaException ex) {
-                System.out.println("problema caricamento tavola");
-            }*/
+         
     }
     public void save(File f) {
             try {
@@ -329,37 +304,7 @@ public class Tavola implements Iterable<Cell>,Serializable{//itera su celle pien
                 } catch (FileNotFoundException ex) {} catch (IOException ex) {
                 Logger.getLogger(Tavola.class.getName()).log(Level.SEVERE, null, ex);
             }
-                /*
-                PrintWriter pw=null;
-                if(!f.exists())
-                try {
-                if(!f.createNewFile())
-                System.out.println("il file non può essere creato");
-                } catch (IOException ex) {
-                
-                }
-                
-                String r1="";
-                try {
-                Scanner s=new Scanner(f);
-                r1=s.nextLine();
-                s.close();
-                pw = new PrintWriter(f);
-                pw.println(r1);
-                }catch(FileNotFoundException e){
-                System.out.println("boh");
-                }
-                try {
-                for(Cell c:this){
-                if(this.getPedina(c).isDamone())
-                pw.println(c.getX()+":"+c.getY()+(":"+this.getPedina(c).getColor()).toUpperCase());
-                else
-                pw.println(c.getX()+":"+c.getY()+(":"+this.getPedina(c).getColor()));
-                }
-                pw.close();
-                } catch (  CellaVuotaException ex) {
-                System.out.println("problema salvataggio tavola");
-                }*/
+               
             
            
     }

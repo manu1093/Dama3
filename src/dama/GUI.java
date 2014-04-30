@@ -93,8 +93,9 @@ public class GUI extends JFrame {
 	private ImageIcon dsn =new ImageIcon("dsn.jpg");
 	private ImageIcon db =new ImageIcon("db.jpg");
 	 private ImageIcon cvs =new ImageIcon("cvs.jpg");
-	GestoreEventi ge=new GestoreEventi();
+	private GestoreEventi ge=new GestoreEventi();
 	private boolean partitaFinita=false;
+        private final JFrame f;
         
         
         
@@ -156,8 +157,208 @@ public class GUI extends JFrame {
 			this.setVisible(true);
                         in.setResizable(false);
                         
-                        this.addWindowListener(new WindowListener(){
+                        //finesra opzioni
+                        f=new JFrame("Opzioni");
+                                
+                     JPanel ris=new JPanel(new GridLayout(4,1));
+                     ris.setSize(100, 200);                        
+                     ris.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createTitledBorder("Risoluzione"),BorderFactory.createEmptyBorder(5,5,5,5)));
+                     JRadioButton r3=new JRadioButton("400x300");
+                     JRadioButton r5=new JRadioButton("600x500");
+                     JRadioButton r6=new JRadioButton("700x600");
+                     JRadioButton r10=new JRadioButton("800x700");
+                     final ButtonGroup r=new ButtonGroup();
+                     r3.setSelected(true);
+                     r.add(r3);r.add(r5);r.add(r6);r.add(r10);
+                     ris.add(r3);ris.add(r5);ris.add(r6);ris.add(r10);
+                     r3.setActionCommand("");
+                     r5.setActionCommand("50");
+                     r6.setActionCommand("60");
+                     r10.setActionCommand("80");/*
+                     GestoreEventiOpzioni g=new GestoreEventiOpzioni();
+                     r3.addActionListener(g);
+                     r5.addActionListener(g);
+                     r6.addActionListener(g);
+                     r10.addActionListener(g);     */                 
 
+                     JPanel mang=new JPanel();
+                     mang.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createTitledBorder("Opzioni mangiata"),BorderFactory.createEmptyBorder(5,5,5,5)));
+                     final JRadioButton pmd=new JRadioButton("La pedina mangia il damone");
+                     final JRadioButton pnmd=new JRadioButton("La pedina non mangia il damone");                 
+                     JLabel lnp=new JLabel("N. di pedine equivalenti al valore di un damone=>");
+                     final JSpinner np=new JSpinner(new SpinnerNumberModel(3,1,6,1));
+
+                     pmd.setSelected(true);
+                     final ButtonGroup mang1=new ButtonGroup();
+                     mang1.add(pmd);mang1.add(pnmd);                   
+                     /*pnmd.addActionListener(g);
+                     pmd.addActionListener(g);*/
+                     pnmd.setActionCommand("pnmd");
+                     pmd.setActionCommand("pmd");
+                     GroupLayout lm=new GroupLayout(mang);
+                     mang.setLayout(lm);
+                     lm.setAutoCreateGaps(true);
+                     lm.setAutoCreateContainerGaps(true);
+                     lm.setHorizontalGroup(lm.createSequentialGroup()
+                             .addGroup(lm.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                     .addComponent(pmd)
+                                     .addComponent(pnmd)
+                                     .addComponent(lnp)
+                             )                                 
+                                     .addComponent(np)                                         
+
+                     );
+                     lm.setVerticalGroup(lm.createSequentialGroup()
+                             .addComponent(pmd)
+                             .addComponent(pnmd)
+                             .addGroup(lm.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                     .addComponent(lnp)
+                                     .addComponent(np)
+                             )
+                     );
+
+                     JPanel patta=new JPanel();
+                     patta.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createTitledBorder("Opzioni patta"),BorderFactory.createEmptyBorder(5,5,5,5)));
+                     JRadioButton ap=new JRadioButton("attiva patta con mosse =>");
+                     JRadioButton dp=new JRadioButton("disattiva patta per mosse");
+                     ap.setActionCommand("ap");
+                     dp.setActionCommand("dp");
+                     JSpinner m=new JSpinner(new SpinnerNumberModel(3,3,10,1)); 
+                     ap.setSelected(true);
+                     final ButtonGroup gPatta=new ButtonGroup();
+                     gPatta.add(ap);gPatta.add(dp);                         
+                     GroupLayout gl=new GroupLayout(patta);
+                     patta.setLayout(gl);
+                     gl.setAutoCreateGaps(true);
+                     gl.setAutoCreateContainerGaps(true);
+                     gl.setHorizontalGroup(gl.createSequentialGroup()
+                             .addGroup(gl.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                     .addComponent(dp)
+                                     .addComponent(ap)
+                             ).addComponent(m)
+                     );
+                     gl.setVerticalGroup(gl.createSequentialGroup()
+                             .addComponent(dp)
+                             .addGroup(gl.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                     .addComponent(ap)
+                                     .addComponent(m)
+                             )
+                     );
+
+
+                     JButton ok=new JButton("ok");                         
+                     ok.addActionListener(new ActionListener(){
+                         @Override
+                         public void actionPerformed(ActionEvent e) {
+
+
+                           if(pnmd.isSelected()){
+                               user.getArbitro().setPedinaMangiaDamone(false);
+                               pc.getArbitro().setPedinaMangiaDamone(false);
+
+                           }
+                           if(pmd.isSelected()){
+                               user.getArbitro().setPedinaMangiaDamone(true);
+                               pc.getArbitro().setPedinaMangiaDamone(true);
+
+                           }
+
+
+                            String c=r.getSelection().getActionCommand();
+                            cvn=new ImageIcon("cvn"+c+".jpg");
+                            pb=new ImageIcon("pb"+c+".jpg");
+                            pn=new ImageIcon("pn"+c+".jpg");
+                            psb=new ImageIcon("psb"+c+".jpg");
+                            psn=new ImageIcon("psn"+c+".jpg");
+                            cvb=new ImageIcon("cvb"+c+".jpg");
+                            dn=new ImageIcon("dn"+c+".jpg");
+                            dsn=new ImageIcon("dsn"+c+".jpg");
+                            db=new ImageIcon("db"+c+".jpg");
+                            dsb=new ImageIcon("dsb"+c+".jpg");
+                            cvs=new ImageIcon("cvs"+c+".jpg");
+
+                            int n;
+                            if(!c.equals(""))
+                                n=Integer.parseInt(c);
+                            else
+                                n=40;
+                            setSizeF(n*10,n*10);
+
+                            JComponent nn=np.getEditor();
+                            if(nn instanceof JSpinner.DefaultEditor){
+                                user.valoreDamone(Integer.parseInt(((JSpinner.DefaultEditor)nn).getTextField().getText()));
+                                pc.valoreDamone(Integer.parseInt(((JSpinner.DefaultEditor)nn).getTextField().getText()));
+                            }
+
+                            c=gPatta.getSelection().getActionCommand();
+                            if(c.equals("ap")){
+                                JComponent pk=np.getEditor();
+                                if(pk instanceof JSpinner.DefaultEditor){
+                                user.setControlloPattaXMosse(Integer.parseInt(((JSpinner.DefaultEditor)pk).getTextField().getText()));
+                                pc.setControlloPattaXMosse(Integer.parseInt(((JSpinner.DefaultEditor)pk).getTextField().getText()));
+                                }
+
+                            }
+                             if(c.equals("dp")){
+                                 user.setControlloPattaXMosse(0);
+                                 pc.setControlloPattaXMosse(0);
+                             }
+                             aggiorna(t);
+                             f.setVisible(false);
+                         }
+
+                 });                         
+
+
+                     JButton annulla=new JButton("Annulla");
+                     annulla.addActionListener(new ActionListener(){
+                         @Override
+                         public void actionPerformed(ActionEvent e) {
+                             f.setVisible(false);                                 
+                         }                        
+                 }); 
+
+                     JPanel pan=new JPanel();
+                     GroupLayout glf=new GroupLayout(pan);
+                     pan.setLayout(glf);                     
+                     glf.setAutoCreateGaps(true);
+                     glf.setAutoCreateContainerGaps(true);
+
+                     glf.setHorizontalGroup(glf.createParallelGroup(GroupLayout.Alignment.CENTER)
+                             .addGroup(glf.createSequentialGroup()
+                                     .addGroup(glf.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                               .addComponent(ris)                                         
+                                    )
+                                     .addGroup(glf.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                .addComponent(mang)
+                                                .addComponent(patta)                                         
+                                    ))
+                             .addGroup(glf.createSequentialGroup()
+                                     .addComponent(ok)
+                                     .addComponent(annulla)
+                             )
+
+                     );
+                     glf.setVerticalGroup(glf.createSequentialGroup()
+                             .addGroup(glf.createParallelGroup(GroupLayout.Alignment.CENTER)
+                                     .addComponent(ris)
+                                     .addGroup(glf.createSequentialGroup()
+                                             .addComponent(mang)
+                                             .addComponent(patta)
+                                     )
+                             ).addGroup(glf.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                     .addComponent(ok)
+                                     .addComponent(annulla)
+                             )
+                     );
+                     f.add(pan);
+                     f.setSize(490,330);
+                     f.setResizable(false);
+                     
+                        this.addWindowListener(new WindowListener(){
+                        
+                       
+                            
                     @Override
                     public void windowOpened(WindowEvent e) {
                         
@@ -178,7 +379,7 @@ public class GUI extends JFrame {
                                 
                         
                     }
-
+                    
                     @Override
                     public void windowClosing(WindowEvent e) {                       
                         if(!partitaFinita){
@@ -244,20 +445,15 @@ public class GUI extends JFrame {
 		private void aggiornaSM(Cell c) {
             try {
                 aggiorna(t);
-                //if(e.turnoBianco()){
+                
                 if(t.containsPedinaBianca(c))
                     a[c.getY()][c.getX()].setIcon(psb);
                 if(t.containsDamoneBianco(c))
                     a[c.getY()][c.getX()].setIcon(dsb);
                 for(Cell p:user.getPossiblyMoves(t,c))
                     a[p.getY()][p.getX()].setIcon(cvs);
-//}
-                /*if(e.turnoNero()){
-                if(t.containsPedinaNera(c))
-                a[c.getY()][c.getX()].setIcon(psn);
-                if(t.containsDamoneNero(c))
-                a[c.getY()][c.getX()].setIcon(dsn);
-                }*/
+
+               
             } catch (CellaVuotaException ex) { } 
             
 			
@@ -269,24 +465,17 @@ public class GUI extends JFrame {
                     oo.writeBoolean(userIsBlack);
                     oo.close();
                 } catch (FileNotFoundException ex) {} catch (IOException ex) { }
-                /*
-                    try (PrintWriter pw = new PrintWriter(f)) {
-                        if(this.userIsBlack){
-                            pw.println("N");
-                        }else
-                            pw.println("B");
-                    } catch (FileNotFoundException ex) {}
-                */
+                
             }    
             public void load(File f) {
                 try{
                     FileInputStream fi=new FileInputStream(f);
                     ObjectInputStream oi=new ObjectInputStream(fi);
-                    this.userIsBlack=oi.readBoolean();
+                    boolean newUserIsBlack=oi.readBoolean();
                     oi.close();
-                    if(userIsBlack)
+                    if(userIsBlack!=newUserIsBlack)
                         this.scambiaPedine();
-                    
+                    userIsBlack=newUserIsBlack;
                     } catch (FileNotFoundException ex) {        
                 Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
@@ -361,13 +550,13 @@ public class GUI extends JFrame {
                 if(a[0][0].getMouseListeners().length==0)
                     for (JLabel[] a1 : a) 
                         for (int j = 0; j<a[0].length; j++) 
-                            a1[j].removeMouseListener(ge);
+                            a1[j].addMouseListener(ge);
                     
             }
             public void iniziaPartita(){
                partitaFinita=false;
                t.inizio();
-               
+               user.clearHistory();
                if(nero.isSelected()){
                       utenteNero();         
                     t=pc.mossaPc(t);          
@@ -380,207 +569,10 @@ public class GUI extends JFrame {
                 aggiorna(t);
             }
             public void showOpzioni(){
-                final JFrame f=new JFrame("Opzioni");
-                         
-                 JPanel ris=new JPanel(new GridLayout(4,1));
-                 ris.setSize(100, 200);                        
-                 ris.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createTitledBorder("Risoluzione"),BorderFactory.createEmptyBorder(5,5,5,5)));
-                 JRadioButton r3=new JRadioButton("400x300");
-                 JRadioButton r5=new JRadioButton("600x500");
-                 JRadioButton r6=new JRadioButton("700x600");
-                 JRadioButton r10=new JRadioButton("800x700");
-                 final ButtonGroup r=new ButtonGroup();
-                 r3.setSelected(true);
-                 r.add(r3);r.add(r5);r.add(r6);r.add(r10);
-                 ris.add(r3);ris.add(r5);ris.add(r6);ris.add(r10);
-                 r3.setActionCommand("");
-                 r5.setActionCommand("50");
-                 r6.setActionCommand("60");
-                 r10.setActionCommand("80");/*
-                 GestoreEventiOpzioni g=new GestoreEventiOpzioni();
-                 r3.addActionListener(g);
-                 r5.addActionListener(g);
-                 r6.addActionListener(g);
-                 r10.addActionListener(g);     */                 
-
-                 JPanel mang=new JPanel();
-                 mang.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createTitledBorder("Opzioni mangiata"),BorderFactory.createEmptyBorder(5,5,5,5)));
-                 final JRadioButton pmd=new JRadioButton("La pedina mangia il damone");
-                 final JRadioButton pnmd=new JRadioButton("La pedina non mangia il damone");                 
-                 JLabel lnp=new JLabel("N. di pedine equivalenti al valore di un damone=>");
-                 final JSpinner np=new JSpinner(new SpinnerNumberModel(3,1,6,1));
+               f.setVisible(true);
                  
-                 pmd.setSelected(true);
-                 final ButtonGroup mang1=new ButtonGroup();
-                 mang1.add(pmd);mang1.add(pnmd);                   
-                 /*pnmd.addActionListener(g);
-                 pmd.addActionListener(g);*/
-                 pnmd.setActionCommand("pnmd");
-                 pmd.setActionCommand("pmd");
-                 GroupLayout lm=new GroupLayout(mang);
-                 mang.setLayout(lm);
-                 lm.setAutoCreateGaps(true);
-                 lm.setAutoCreateContainerGaps(true);
-                 lm.setHorizontalGroup(lm.createSequentialGroup()
-                         .addGroup(lm.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                 .addComponent(pmd)
-                                 .addComponent(pnmd)
-                                 .addComponent(lnp)
-                         )                                 
-                                 .addComponent(np)                                         
-
-                 );
-                 lm.setVerticalGroup(lm.createSequentialGroup()
-                         .addComponent(pmd)
-                         .addComponent(pnmd)
-                         .addGroup(lm.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                 .addComponent(lnp)
-                                 .addComponent(np)
-                         )
-                 );
-
-                 JPanel patta=new JPanel();
-                 patta.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createTitledBorder("Opzioni patta"),BorderFactory.createEmptyBorder(5,5,5,5)));
-                 JRadioButton ap=new JRadioButton("attiva patta con mosse =>");
-                 JRadioButton dp=new JRadioButton("disattiva patta per mosse");
-                 ap.setActionCommand("ap");
-                 dp.setActionCommand("dp");
-                 JSpinner m=new JSpinner(new SpinnerNumberModel(3,3,10,1)); 
-                 ap.setSelected(true);
-                 final ButtonGroup gPatta=new ButtonGroup();
-                 gPatta.add(ap);gPatta.add(dp);                         
-                 GroupLayout gl=new GroupLayout(patta);
-                 patta.setLayout(gl);
-                 gl.setAutoCreateGaps(true);
-                 gl.setAutoCreateContainerGaps(true);
-                 gl.setHorizontalGroup(gl.createSequentialGroup()
-                         .addGroup(gl.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                 .addComponent(dp)
-                                 .addComponent(ap)
-                         ).addComponent(m)
-                 );
-                 gl.setVerticalGroup(gl.createSequentialGroup()
-                         .addComponent(dp)
-                         .addGroup(gl.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                 .addComponent(ap)
-                                 .addComponent(m)
-                         )
-                 );
-
-
-                 JButton ok=new JButton("ok");                         
-                 ok.addActionListener(new ActionListener(){
-                     @Override
-                     public void actionPerformed(ActionEvent e) {
-                        
-                         
-                       if(pnmd.isSelected()){
-                           user.getArbitro().setPedinaMangiaDamone(false);
-                           pc.getArbitro().setPedinaMangiaDamone(false);
-                           
-                       }
-                       if(pmd.isSelected()){
-                           user.getArbitro().setPedinaMangiaDamone(true);
-                           pc.getArbitro().setPedinaMangiaDamone(true);
-                           
-                       }
-                       
-                      
-                        String c=r.getSelection().getActionCommand();
-                        cvn=new ImageIcon("cvn"+c+".jpg");
-                        pb=new ImageIcon("pb"+c+".jpg");
-                        pn=new ImageIcon("pn"+c+".jpg");
-                        psb=new ImageIcon("psb"+c+".jpg");
-                        psn=new ImageIcon("psn"+c+".jpg");
-                        cvb=new ImageIcon("cvb"+c+".jpg");
-                        dn=new ImageIcon("dn"+c+".jpg");
-                        dsn=new ImageIcon("dsn"+c+".jpg");
-                        db=new ImageIcon("db"+c+".jpg");
-                        dsb=new ImageIcon("dsb"+c+".jpg");
-                        cvs=new ImageIcon("cvs"+c+".jpg");
-                        
-                        int n;
-                        if(!c.equals(""))
-                            n=Integer.parseInt(c);
-                        else
-                            n=40;
-                        setSizeF(n*10,n*10);
-
-                        JComponent nn=np.getEditor();
-                        if(nn instanceof JSpinner.DefaultEditor){
-                            user.valoreDamone(Integer.parseInt(((JSpinner.DefaultEditor)nn).getTextField().getText()));
-                            pc.valoreDamone(Integer.parseInt(((JSpinner.DefaultEditor)nn).getTextField().getText()));
-                        }
-
-                        c=gPatta.getSelection().getActionCommand();
-                        if(c.equals("ap")){
-                            JComponent pk=np.getEditor();
-                            if(pk instanceof JSpinner.DefaultEditor){
-                            user.setControlloPattaXMosse(Integer.parseInt(((JSpinner.DefaultEditor)pk).getTextField().getText()));
-                            pc.setControlloPattaXMosse(Integer.parseInt(((JSpinner.DefaultEditor)pk).getTextField().getText()));
-                            }
-                          
-                        }
-                         if(c.equals("dp")){
-                             user.setControlloPattaXMosse(0);
-                             pc.setControlloPattaXMosse(0);
-                         }
-                         aggiorna(t);
-                         f.setVisible(false);
-                     }
-
-             });                         
-
-
-                 JButton annulla=new JButton("Annulla");
-                 annulla.addActionListener(new ActionListener(){
-                     @Override
-                     public void actionPerformed(ActionEvent e) {
-                         f.setVisible(false);                                 
-                     }                        
-             }); 
-
-                 JPanel pan=new JPanel();
-                 GroupLayout glf=new GroupLayout(pan);
-                 pan.setLayout(glf);                     
-                 glf.setAutoCreateGaps(true);
-                 glf.setAutoCreateContainerGaps(true);
-
-                 glf.setHorizontalGroup(glf.createParallelGroup(GroupLayout.Alignment.CENTER)
-                         .addGroup(glf.createSequentialGroup()
-                                 .addGroup(glf.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                           .addComponent(ris)                                         
-                                )
-                                 .addGroup(glf.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                            .addComponent(mang)
-                                            .addComponent(patta)                                         
-                                ))
-                         .addGroup(glf.createSequentialGroup()
-                                 .addComponent(ok)
-                                 .addComponent(annulla)
-                         )
-
-                 );
-                 glf.setVerticalGroup(glf.createSequentialGroup()
-                         .addGroup(glf.createParallelGroup(GroupLayout.Alignment.CENTER)
-                                 .addComponent(ris)
-                                 .addGroup(glf.createSequentialGroup()
-                                         .addComponent(mang)
-                                         .addComponent(patta)
-                                 )
-                         ).addGroup(glf.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                 .addComponent(ok)
-                                 .addComponent(annulla)
-                         )
-                 );
-                 f.add(pan);
-                 f.setSize(490,330);
-                 f.setResizable(false);
-                 f.setVisible(true);
             }
-            public void opzioniOk(){
-                
-            }
+            
 		private class GestoreEventi implements MouseListener{
 			
 			
@@ -613,26 +605,32 @@ public class GUI extends JFrame {
                                                            
 							}
                                                         
-                                                        if(user.controlPatta(t)){
-                                                            finePartita("patta");                                                            
-                                                        }
-                                                         if(user.controlVictory(t)){
-                                                            finePartita("hai vinto");
-                                                         }   
+                                                          
 							
                                               
                                                                
-                                                              if(r==1){  
-                                                                  aggiorna(t);
-                                                                  
+                                                        if(r==1){
+                                                            boolean b=true;
+                                                            aggiorna(t);
+                                                            if(user.controlPatta(t)){
+                                                                    finePartita("patta");
+                                                                    b=false;
+                                                             }
+                                                            if(user.controlVictory(t)){
+                                                                    finePartita("hai vinto");
+                                                                     b=false;
+                                                         } 
+                                                              if(b){
                                                                 t=pc.mossaPc(t);
                                                                 aggiorna(t);
                                                                 if(pc.controlPatta(t)){
-                                                                    finePartita("patta");                                                            
+                                                                finePartita("patta");                                                            
                                                                 }
                                                                 if(pc.controlVictory(t)){
                                                                     finePartita("hai perso");
                                                                  } 
+                                                              }
+                                                                
                                                                 
                                                               }
                                                               
@@ -681,7 +679,7 @@ public class GUI extends JFrame {
         public void mouseClicked(MouseEvent arg) {
            if(arg.getSource()==ok){               
               iniziaPartita();
-             in.dispose();
+              in.dispose();
                                 }
            if(arg.getSource()==about){
               JOptionPane.showMessageDialog(null,"made by Stefano Gugole & Manauele Frigo", "About",JOptionPane.INFORMATION_MESSAGE);

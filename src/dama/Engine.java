@@ -57,7 +57,7 @@ public class Engine {
                         //f=false;
                         if(!ar.controlSource(t)){
                                 ar.resettaMossa();
-                                JOptionPane.showMessageDialog(null,"casella sorgente non valida");
+                               
                                 
                         }else
                                 return 0;//seleziona la pedina col giallo
@@ -89,7 +89,7 @@ public class Engine {
                          
                           
                             if(!ar.control(t)){
-                                JOptionPane.showMessageDialog(null,"mossa non valida1");
+                                JOptionPane.showMessageDialog(null,"mossa non valida");
                                 ar.resettaMossa();
                                 return 2;
                             }
@@ -162,7 +162,7 @@ public class Engine {
 	}
 	
         private ArrayList<Arbitro> mangiabiliP(Tavola t) {//torna tutte le celle che possono mangiare
-		Arbitro arr=new Arbitro(this.turno);
+		Arbitro arr=new Arbitro(ar);
                
                 
                 ArrayList <Node> mp=new ArrayList<>();//mangiate possibili
@@ -719,6 +719,9 @@ public class Engine {
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Tavola.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+        public void clearHistory(){
+            Engine.history.clear();
         }
 	}	
 				

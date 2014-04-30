@@ -19,10 +19,11 @@ public final class Arbitro {
 	private Cell moveSource;
 	private Cell moveDestination;	
 	private final int turn;
-        private boolean pedinaMangiaDamone=true; 
+        private  boolean pedinaMangiaDamone; 
 	public Arbitro(int turn){
 		this.resettaMossa();
                 this.turn=turn;
+                pedinaMangiaDamone=true;
 	}
 	
 	public Arbitro(Arbitro a){
@@ -36,7 +37,7 @@ public final class Arbitro {
                             this.moveSource=null;
 			
                         this.turn=a.turn;
-		
+                        this.pedinaMangiaDamone=a.pedinaMangiaDamone;
 		
 	}
         
